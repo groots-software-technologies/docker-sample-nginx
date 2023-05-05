@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_docker_sample_nginx_1683290881562-pr-trigger-input-set
+  identifier: Build_docker_sample_nginx_1683290881562prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: samplecitest
+  pipeline:
+    identifier: Build_docker_sample_nginx_1683290881562
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
