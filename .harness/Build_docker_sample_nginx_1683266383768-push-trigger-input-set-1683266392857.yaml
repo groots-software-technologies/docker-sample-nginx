@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_docker_sample_nginx_1683266383768-push-trigger-input-set
+  identifier: Build_docker_sample_nginx_1683266383768pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: test
+  pipeline:
+    identifier: Build_docker_sample_nginx_1683266383768
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
