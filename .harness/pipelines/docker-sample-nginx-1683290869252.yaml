@@ -30,27 +30,15 @@ pipeline:
                       tags: latest
                   timeout: ""
                   type: Plugin
-              - parallel:
-                  - step:
-                      type: BuildAndPushDockerRegistry
-                      name: BuildAndPushDockerRegistry_1
-                      identifier: BuildAndPushDockerRegistry_1
-                      spec:
-                        connectorRef: mydockerhubsecret
-                        repo: mayurmadan/samplejs
-                        tags:
-                          - <+pipeline.sequenceId>
-                  - step:
-                      type: BuildAndPushECR
-                      name: BuildAndPushECR_1
-                      identifier: BuildAndPushECR_1
-                      spec:
-                        connectorRef: awsconnector
-                        region: 983392546126.dkr.ecr.ap-south-1.amazonaws.com/harness:123
-                        account: 983392546126.dkr.ecr.ap-south-1.amazonaws.com
-                        imageName: test-harness
-                        tags:
-                          - "123"
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: mydockerhubsecret
+                    repo: mayurmadan/samplejs
+                    tags:
+                      - <+pipeline.sequenceId>
           platform:
             os: Linux
             arch: Amd64
