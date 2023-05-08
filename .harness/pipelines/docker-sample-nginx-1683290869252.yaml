@@ -19,25 +19,17 @@ pipeline:
             enabled: true
           execution:
             steps:
-              - parallel:
-                  - step:
-                      identifier: dockerbuild
-                      name: docker_build
-                      spec:
-                        image: plugins/docker
-                        settings:
-                          dry_run: "true"
-                          repo: hello/world
-                          tags: latest
-                      timeout: ""
-                      type: Plugin
-                  - step:
-                      type: Run
-                      name: Run_1
-                      identifier: Run_1
-                      spec:
-                        shell: Bash
-                        command: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 983392546126.dkr.ecr.ap-south-1.amazonaws.com
+              - step:
+                  identifier: dockerbuild
+                  name: docker_build
+                  spec:
+                    image: plugins/docker
+                    settings:
+                      dry_run: "true"
+                      repo: hello/world
+                      tags: latest
+                  timeout: ""
+                  type: Plugin
               - parallel:
                   - step:
                       type: BuildAndPushDockerRegistry
@@ -55,16 +47,16 @@ pipeline:
                       spec:
                         connectorRef: awsconnector
                         region: 983392546126.dkr.ecr.ap-south-1.amazonaws.com/harness:123
-                        account: "983392546126"
+                        account: 983392546126.dkr.ecr.ap-south-1.amazonaws.com
                         imageName: test-harness
                         tags:
                           - "123"
           platform:
-            arch: Amd64
             os: Linux
+            arch: Amd64
           runtime:
-            spec: {}
             type: Cloud
+            spec: {}
         type: CI
   notificationRules:
     - name: sample-ci-test
