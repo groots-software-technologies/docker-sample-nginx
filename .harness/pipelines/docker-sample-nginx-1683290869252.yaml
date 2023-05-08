@@ -46,11 +46,11 @@ pipeline:
                       identifier: BuildAndPushECR_1
                       spec:
                         connectorRef: awsconnector
-                        region: ap-south-1
+                        region: 983392546126.dkr.ecr.ap-south-1.amazonaws.com/harness:123
                         account: "983392546126"
                         imageName: test-harness
                         tags:
-                          - harness-pushed-image
+                          - "123"
           platform:
             arch: Amd64
             os: Linux
