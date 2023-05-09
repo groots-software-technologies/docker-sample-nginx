@@ -19,17 +19,18 @@ pipeline:
             enabled: true
           execution:
             steps:
-              - step:
-                  identifier: dockerbuild
-                  name: docker_build
-                  spec:
-                    image: plugins/docker
-                    settings:
-                      dry_run: "true"
-                      repo: hello/world
-                      tags: latest
-                  timeout: ""
-                  type: Plugin
+              - parallel:
+                  - step:
+                      identifier: dockerbuild
+                      name: docker_build
+                      spec:
+                        image: plugins/docker
+                        settings:
+                          dry_run: "true"
+                          repo: hello/world
+                          tags: latest
+                      timeout: ""
+                      type: Plugin
               - parallel:
                   - step:
                       type: BuildAndPushDockerRegistry
@@ -47,7 +48,7 @@ pipeline:
                       spec:
                         connectorRef: awsconnector
                         region: docker push 983392546126.dkr.ecr.ap-south-1.amazonaws.com/harness:latest
-                        account: 983392546126.dkr.ecr.ap-south-1.amazonaws.com
+                        account: "983392546126"
                         imageName: harness
                         tags:
                           - latest
