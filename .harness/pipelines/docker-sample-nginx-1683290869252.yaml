@@ -49,6 +49,48 @@ pipeline:
             type: Cloud
             spec: {}
         type: CI
+    - stage:
+        name: deploy
+        identifier: deploy
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: Kubernetes
+          service:
+            serviceRef: sampleservice
+          environment:
+            environmentRef: sampleservice
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: sampleservice
+          execution:
+            steps:
+              - step:
+                  type: K8sBlueGreenDeploy
+                  name: K8sBlueGreenDeploy_1
+                  identifier: K8sBlueGreenDeploy_1
+                  spec:
+                    skipDryRun: false
+                    pruningEnabled: false
+                  timeout: 10m
+                  failureStrategies:
+                    - onFailure:
+                        errors:
+                          - AllErrors
+                        action:
+                          type: MarkAsFailure
+            rollbackSteps: []
+        tags: {}
+        delegateSelectors:
+          - kubernetes-delegate
+        when:
+          pipelineStatus: All
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: MarkAsFailure
   notificationRules:
     - name: sample-ci-test
       identifier: samplecitest
